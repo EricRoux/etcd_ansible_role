@@ -2,3 +2,12 @@
 # tasks file for /home/roux/ppp/programming/ansible/etcd/
 - name: Download executable files
   import_tasks: downloadExecutableFiles.yml
+
+- name: Create user and group
+  import_tasks: user_group.yml
+
+- name: Create dirs
+  import_tasks: dirs.yml
+
+- name: Create configs
+  import_tasks: config.yml

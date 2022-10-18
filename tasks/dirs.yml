@@ -1,0 +1,9 @@
+---
+- name: "Create directories"
+  file:
+    path: "{{ etcd_dir[item]['path'] }}"
+    owner: "{{ etcd_dir[item]['owner'] }}"
+    group: "{{ etcd_dir[item]['group'] }}"
+    mode: "{{ etcd_dir[item]['mode'] }}"
+    state: directory
+  loop: "{{ etcd_dir | flatten(levels=1) }}"

@@ -1,0 +1,12 @@
+---
+- name: "Add {{ etcd_group }}  group"
+  group:
+    name: "{{ etcd_group }}"
+    state: present
+
+- name: "Add {{ etcd_user }} user"
+  user:
+    name: "{{ etcd_user }}"
+    group: "{{ etcd_group }}"
+    system: true
+    home: "{{ etcd_home_dir }}"

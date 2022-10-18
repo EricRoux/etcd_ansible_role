@@ -1,7 +1,11 @@
 ---
 # defaults file for /home/roux/ppp/programming/ansible/etcd/
-
 etcd_version: v3.5.5
+etcd_user: etcd
+etcd_group: etcd
+etcd_home_dir: /var/lib/etcd
+etcd_service: etcd-member
+
 etcd_archive:
   download_url: https://storage.googleapis.com/etcd/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-amd64.tar.gz
   dest_path: /tmp/etcd-{{ etcd_version }}-linux-amd64.tar.gz
@@ -9,3 +13,27 @@ etcd_archive:
   mode: "0644"
   # username:
   # password:
+
+etcd_hosts: []
+  # - hostname1
+  # - hostname2
+
+etcd_systemd_unit:
+  type: notify
+  restart: always
+  restartSec: 10s
+  limitNOFILE: 40000
+
+etcd_dir:
+  home:
+    path: {{ etcd_home_dir }}
+    owner: {{ etcd_user }}
+    group: {{ etcd_group }}
+    mode: "0755"
+
+etcd_system_config_files:
+  systemdUnit:
+    path: /usr/lib/systemd/system/{{ etcd_service }}.service
+    group: root
+    owner: root
+    mode: "0755"

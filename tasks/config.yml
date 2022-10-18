@@ -1,0 +1,10 @@
+---
+- name: "Create system configs"
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ etcd_system_config_files[item]['path'] }}"
+    owner: "{{ etcd_system_config_files[item]['owner'] }}"
+    group: "{{ etcd_system_config_files[item]['group'] }}"
+    mode:  "{{ etcd_system_config_files[item]['mode'] }}"
+  loop: "{{ etcd_system_config_files | flatten(levels=1) }}"
+  notify: Restart etcd
