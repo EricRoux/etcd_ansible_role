@@ -1,0 +1,10 @@
+Environment="ETCD_DATA_DIR={{ etcd_data_dir }}"
+Environment="ETCD_IMAGE_TAG={{ etcd_version }}"
+Environment="ETCD_NAME={{ inventory_hostname }}"
+Environment="ETCD_OPTS=--listen-client-urls http://0.0.0.0:2379 \
+  --advertise-client-urls http://0.0.0.0:2379 \
+  --listen-peer-urls http://0.0.0.0:2380 \
+  --initial-advertise-peer-urls http://0.0.0.0:2380 \
+  --initial-cluster {% for host in etcd_hosts %} host=http://{{ host }}:2380 {% endfor %} \
+  --initial-cluster-token {{ etcd_token }} \
+  --initial-cluster-state new"

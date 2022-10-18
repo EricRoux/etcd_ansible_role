@@ -5,6 +5,7 @@ etcd_user: etcd
 etcd_group: etcd
 etcd_home_dir: /var/lib/etcd
 etcd_service: etcd-member
+etcd_token: mytoken
 
 etcd_archive:
   download_url: https://storage.googleapis.com/etcd/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-amd64.tar.gz
@@ -14,7 +15,8 @@ etcd_archive:
   # username:
   # password:
 
-etcd_hosts: []
+etcd_hosts: 
+  - localhost
   # - hostname1
   # - hostname2
 
@@ -32,6 +34,11 @@ etcd_dir:
     mode: "0755"
 
 etcd_system_config_files:
+  conf:
+    path: "{{ etcd_home_dir }}/etcd_env.conf"
+    group: {{ etcd_user }}
+    owner: {{ etcd_group }}
+    mode: "0644"
   systemdUnit:
     path: /usr/lib/systemd/system/{{ etcd_service }}.service
     group: root

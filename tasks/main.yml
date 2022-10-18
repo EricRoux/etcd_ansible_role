@@ -11,3 +11,10 @@
 
 - name: Create configs
   import_tasks: config.yml
+
+- name: Enable and start etcd service
+  systemd:
+    name: "{{ etcd_service }}" 
+    enabled: yes
+    state: started
+    daemon_reload: yes
