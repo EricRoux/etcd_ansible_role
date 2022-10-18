@@ -1,0 +1,32 @@
+---
+- name: Download etcd archive
+  ansible.builtin.get_url:
+    url: {{ etcd_archive.download_url }}
+    dest: {{ etcd_archive.dest_path }}
+    mode: {{ etcd_archive.mode }}
+    url_username: {{ etcd_archive.username | default(omit) }}
+    url_password: {{ etcd_archive.password | default(omit) }}
+
+- name: Extract etcd archive into {{ etcd_archive.extract_path }}
+  ansible.builtin.unarchive:
+    src: {{ etcd_archive.dest_path }}
+    dest: {{ etcd_archive.extract_path }}
+    extra_opts: 
+      - --strip-components=1
+
+- name: Copy etcd and etcdctl to /usr/local/bin
+  ansible.builtin.copy:
+    src: {{ item }}
+    dest: /usr/local/bin
+    mode: "0755"
+    loop: 
+      - "{{ etcd_archive.extract_path }}/etcd"
+      - "{{ etcd_archive.extract_path }}/etcdctl"
+
+- name: Remove etcd archive and extract dir
+  ansible.builtin.file:
+    path: {{ item }}
+    state: absent
+    loop: 
+      - {{ etcd_archive.dest_path }}
+      - {{ etcd_archive.extract_path }}

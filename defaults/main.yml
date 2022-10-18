@@ -1,2 +1,11 @@
 ---
 # defaults file for /home/roux/ppp/programming/ansible/etcd/
+
+etcd_version: v3.5.5
+etcd_archive:
+  download_url: https://storage.googleapis.com/etcd/{{ etcd_version }}/etcd-{{ etcd_version }}-linux-amd64.tar.gz
+  dest_path: /tmp/etcd-{{ etcd_version }}-linux-amd64.tar.gz
+  extract_path: /tmp/etcd-download
+  mode: "0644"
+  # username:
+  # password:

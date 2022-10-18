@@ -1,2 +1,4 @@
 ---
 # tasks file for /home/roux/ppp/programming/ansible/etcd/
+- name: Download executable files
+  import_tasks: downloadExecutableFiles.yml
