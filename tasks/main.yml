@@ -3,18 +3,21 @@
 - name: Download executable files
   import_tasks: downloadExecutableFiles.yml
 
-- name: Create user and group
-  import_tasks: user_group.yml
+- name: Create and start service
+  block: 
+    - name: Create user and group
+      import_tasks: user_group.yml
 
-- name: Create dirs
-  import_tasks: dirs.yml
+    - name: Create dirs
+      import_tasks: dirs.yml
 
-- name: Create configs
-  import_tasks: config.yml
+    - name: Create configs
+      import_tasks: config.yml
 
-- name: Enable and start etcd service
-  systemd:
-    name: "{{ etcd_service }}" 
-    enabled: yes
-    state: started
-    daemon_reload: yes
+    - name: Enable and start etcd service
+      systemd:
+        name: "{{ etcd_service }}" 
+        enabled: yes
+        state: started
+        daemon_reload: yes
+  when: any([host == inventory_hostname for host in etcd_hosts])
