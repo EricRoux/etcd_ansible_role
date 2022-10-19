@@ -15,11 +15,6 @@ etcd_archive:
   # username:
   # password:
 
-etcd_hosts: 
-  - localhost
-  # - hostname1
-  # - hostname2
-
 etcd_systemd_unit:
   type: notify
   restart: always
